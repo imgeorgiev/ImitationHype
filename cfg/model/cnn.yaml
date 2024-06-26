@@ -1,0 +1,6 @@
+_target_: models.BCPolicy
+num_img: 2 # TODO shouldn't be hardcoded
+qpos_dim: ???
+act_len: ???
+hidden_size: [2048, 2048, 2048]
+hidden_dim: 512

@@ -1,0 +1,41 @@
+_target_: models.ACT
+qpos_dim: ???
+act_len: ???
+hidden_dim: 512
+style_latent_dim: 128
+image_pos_enc_scale: 0.1
+freeze_backbone_bn: False
+backbone:
+  _target_: torchvision.models.resnet18
+  weights: "DEFAULT"
+style_encoder:
+  _target_: models.StyleEncoder
+  act_dim: ${model.qpos_dim}
+  act_len: ${model.act_len}
+  hidden_dim: 128
+  latent_dim: ${model.style_latent_dim}
+  h: 8
+  d_ff: 512
+  num_layers: 3
+  dropout: 0.1
+
+# default act style encoder parameters
+# style_encoder:
+#   _target_: models.StyleEncoder
+#   act_dim: ${model.qpos_dim}
+#   act_len: ${model.act_len}
+#   hidden_dim: 512
+#   latent_dim: ${model.style_latent_dim}
+#   h: 8
+#   d_ff: 2048
+#   num_layers: 4
+#   dropout: 0.1
+
+transformer:
+  _target_: torch.nn.Transformer
+  d_model: ${model.hidden_dim}
+  nhead: 8
+  dim_feedforward: 3200
+  num_encoder_layers: 4
+  num_decoder_layers: 4
+  dropout: 0.1
